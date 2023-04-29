@@ -30,7 +30,7 @@
                         Content="Browse"
                         FontSize="16"
                         Padding="10"
-                        DockPanel.Dock="Right" />
+                        DockPanel.Dock="Right" Click="btnImagePath_Click" />
                 <TextBox x:Name="txtImagePath"
                      FontSize="16"
                      Text="{Binding Path=ImagePath, Mode=OneWay}" />

@@ -2,6 +2,8 @@
 using Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,10 +25,12 @@ namespace GamesManagementApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IEnumerable<Game> games = new List<Game>();
+        //private IEnumerable<Game> games = new List<Game>();
         private IEnumerable<Genre> genres = new List<Genre>();
+
         private List<string> selectedGenres = new List<string>();
         private string searchTitle = "";
+        private ObservableCollection<Game> gameObservable = new ObservableCollection<Game>();
 
         public MainWindow()
         {
@@ -45,13 +49,24 @@ namespace GamesManagementApp
         private void Reload()
         {
             LoadGenres();
-            LoadGenres();
+            LoadGames();
         }
 
         private void LoadGames()
         {
-            games = GamesDAO.Instance.GetGames();
-            lsGames.ItemsSource = games;
+            gameObservable = new ObservableCollection<Game>(GamesDAO.Instance.GetGames());
+            //IEnumerable<Game> games = GamesDAO.Instance.GetGames();
+
+            //set image
+            foreach (var game in gameObservable)
+            {
+                if (!File.Exists(game.ImagePath))
+                {
+                    game.ImagePath = "C:\\Users\\GIGABYTE\\OneDrive\\Pictures\\cyberpunkcity.jpg";
+                }
+            }
+            //gameObservable = new ObservableCollection<Game>(games);
+            lsGames.ItemsSource = gameObservable;
         }
 
         private void LoadGenres()
@@ -92,8 +107,8 @@ namespace GamesManagementApp
 
         private void Filter()
         {
-            games = GamesDAO.Instance.GetGames(searchTitle, selectedGenres.ToArray());
-            lsGames.ItemsSource = games;
+            gameObservable = new(GamesDAO.Instance.GetGames(searchTitle, selectedGenres.ToArray()));
+            lsGames.ItemsSource = gameObservable;
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)

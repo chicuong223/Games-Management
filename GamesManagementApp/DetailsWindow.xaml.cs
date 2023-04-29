@@ -1,4 +1,5 @@
 ﻿using DataAccess;
+using Microsoft.Win32;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,24 @@ namespace GamesManagementApp
             InitializeComponent();
             if (game != null)
             {
-                this.game = game;
+                //this.game = game;
+                try
+                {
+                    var findGame = GamesDAO.Instance.FindGameById(game.Id);
+                    if (findGame == null)
+                    {
+                        MessageBox.Show("Could not find game!");
+                        this.DialogResult = false;
+                        return;
+                    }
+                    this.game = findGame;
+                }
+                catch
+                {
+                    MessageBox.Show("Error loading game!");
+                    this.DialogResult = false;
+                    return;
+                }
             }
             this.isUpdating = isUpdating;
             this.DataContext = this.game;
@@ -69,6 +87,17 @@ namespace GamesManagementApp
             game.Title = txtTitle.Text;
             game.ExecutablePath = txtExecutablePath.Text;
             game.ImagePath = txtImagePath.Text;
+            foreach (CheckBox cb in lvGenres.Children)
+            {
+                if (cb != null && cb.IsChecked == true)
+                {
+                    Genre? genre = cb.Tag as Genre;
+                    if (genre != null)
+                    {
+                        game.Genres.Add(genre);
+                    }
+                }
+            }
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -78,8 +107,15 @@ namespace GamesManagementApp
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            GetData();
             string message = string.Empty;
+            message = ValidateData();
+            if (message != string.Empty)
+            {
+                MessageBox.Show(message);
+                return;
+            }
+
+            GetData();
             try
             {
                 if (!isUpdating)
@@ -99,6 +135,32 @@ namespace GamesManagementApp
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private string ValidateData()
+        {
+            string result = string.Empty;
+            if (string.IsNullOrEmpty(txtTitle.Text))
+            {
+                result += "Title is required!\n";
+            }
+            if (string.IsNullOrEmpty(txtExecutablePath.Text))
+            {
+                result += "Executable Path is required!\n";
+            }
+            return result;
+        }
+
+        private void btnImagePath_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.DefaultExt = ".jpg";
+            dialog.Filter = "JPEG Image (*.jpeg)|*.jpeg|PNG Image (*.png)|*.png|JPG Image (*.jpg)|*.jpg|GIF Image (*.gif)|*.gif";
+            bool? result = dialog.ShowDialog();
+            if (result == true)
+            {
+                txtImagePath.Text = dialog.FileName;
             }
         }
     }
