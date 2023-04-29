@@ -18,9 +18,13 @@ List<Genre>? genres = new List<Genre>();
 //};
 
 //XmlUtils.WriteToXml(genres, Directory.GetCurrentDirectory(), "genres.xml");
-genres = (List<Genre>)XmlUtils.ReadFromXml<List<Genre>>(Path.Combine(Directory.GetCurrentDirectory(), "genres.xml"));
+//genres = (List<Genre>)XmlUtils.ReadFromXml<List<Genre>>(Path.Combine(Directory.GetCurrentDirectory(), "genres.xml"));
 
-foreach (var genre in genres)
-{
-    Console.WriteLine(genre.Name);
-}
+//foreach (var genre in genres)
+//{
+//    Console.WriteLine(genre.Name);
+//}
+string filePath = "D:\\GamesImages\\aer.jpg";
+string folder = Path.GetDirectoryName(filePath);
+string fileName = Path.GetFileName(filePath);
+Console.WriteLine(fileName);
