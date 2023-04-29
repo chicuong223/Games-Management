@@ -9,11 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "Utils\Utils.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{0539E40A-3093-4761-AE70-457EC3A2C5CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Logic\Logic.csproj", "{894A5643-8FF7-4B1C-8AB2-73CCACE09599}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamesManagementApp", "GamesManagementApp\GamesManagementApp.csproj", "{F0D1D289-9E60-43F8-85E8-5F8FDC900853}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{E6C95C85-6DA6-46FB-9FBB-69F1A9231B5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "TestConsole\TestConsole.csproj", "{E6C95C85-6DA6-46FB-9FBB-69F1A9231B5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{0539E40A-3093-4761-AE70-457EC3A2C5CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0539E40A-3093-4761-AE70-457EC3A2C5CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0539E40A-3093-4761-AE70-457EC3A2C5CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{894A5643-8FF7-4B1C-8AB2-73CCACE09599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{894A5643-8FF7-4B1C-8AB2-73CCACE09599}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{894A5643-8FF7-4B1C-8AB2-73CCACE09599}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{894A5643-8FF7-4B1C-8AB2-73CCACE09599}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F0D1D289-9E60-43F8-85E8-5F8FDC900853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F0D1D289-9E60-43F8-85E8-5F8FDC900853}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0D1D289-9E60-43F8-85E8-5F8FDC900853}.Release|Any CPU.ActiveCfg = Release|Any CPU

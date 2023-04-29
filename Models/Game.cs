@@ -8,6 +8,10 @@ namespace Models
 {
     public class Game
     {
+        public Game()
+        {
+        }
+
         public Game(Guid id, string title, string imagePath, string executablePath, List<Genre> genres)
         {
             Id = id;

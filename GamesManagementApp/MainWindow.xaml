@@ -5,8 +5,74 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GamesManagementApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Loaded="Window_Loaded"
+        Title="Games Manager">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="filterGrid" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="panelSearch" Orientation="Horizontal" Grid.Row="0">
+                <TextBox x:Name="txtSearch" Height="35" Width="200" TextChanged="txtSearch_TextChanged" />
+                <Button x:Name="btnSearch" Content="Search" Width="100" Height="35" />
+            </StackPanel>
+            <StackPanel x:Name="panelGenres"
+                        Orientation="Vertical"
+                        Grid.Row="1">
+            </StackPanel>
+            <!--<ListView x:Name="lvGenres" Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="Genre">
+                        <CheckBox x:Name="chkGenre"
+                                  Content="{Binding Path=Name}"
+                                  IsChecked="{Binding Path=IsChecked,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Mode=TwoWay }" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>-->
+        </Grid>
+        <Grid x:Name="gamesGrid" Grid.Column="1">
+            <ListBox x:Name="lsGames">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3" HorizontalAlignment="Center" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="Game">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="{Binding Path=ImagePath}"
+                                   Width="240"
+                                   Height="320"
+                                   Stretch="UniformToFill"
+                                   HorizontalAlignment="Center" />
+                            <TextBlock Text="{Binding Path=Title}"
+                                       HorizontalAlignment="Center"
+                                       FontSize="16" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button x:Name="btnPlay"
+                                        Content="Play"
+                                        Width="100"
+                                        Height="35"
+                                        Margin="15"
+                                        Click="btnPlay_Click"
+                                        FontSize="16" />
+                                <Button x:Name="btnDetails"
+                                        Content="Details"
+                                        Width="100"
+                                        Height="35"
+                                        Margin="15"
+                                        FontSize="16" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
     </Grid>
 </Window>

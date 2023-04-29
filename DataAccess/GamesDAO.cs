@@ -33,7 +33,7 @@ namespace DataAccess
             }
         }
 
-        public IEnumerable<Game> GetGames(string title, string[] genres)
+        public IEnumerable<Game> GetGames(string? title = null, string[]? genres = null)
         {
             IEnumerable<Game> games = Cache.Games;
             if (!string.IsNullOrEmpty(title))
@@ -43,11 +43,11 @@ namespace DataAccess
             if (genres != null && genres.Length > 0)
             {
                 List<Game> tmp = new List<Game>();
-                foreach (string genre in genres)
+                foreach (var game in games)
                 {
-                    foreach (var game in games)
+                    foreach (var genre in genres)
                     {
-                        if (game.Genres.Any(g => g.Name.Equals(genre, StringComparison.InvariantCultureIgnoreCase)))
+                        if (game.Genres.Any(g => g.Name.Equals(genre)))
                         {
                             tmp.Add(game);
                             break;
