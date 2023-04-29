@@ -12,5 +12,6 @@ namespace Utils
         public static readonly string ImageFolderPath = ResourceFolderName + Path.PathSeparator + "images";
         public static readonly string GamesFileName = "games.xml";
         public static readonly string GenresFileName = "genres.xml";
+        public static readonly string DefaultImageFileName = "default.jpg";
     }
 }

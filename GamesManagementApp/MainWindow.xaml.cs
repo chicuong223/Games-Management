@@ -64,7 +64,8 @@ namespace GamesManagementApp
             {
                 if (!File.Exists(game.ImagePath))
                 {
-                    game.ImagePath = "C:\\Users\\GIGABYTE\\OneDrive\\Pictures\\cyberpunkcity.jpg";
+                    //game.ImagePath = "C:\\Users\\GIGABYTE\\OneDrive\\Pictures\\cyberpunkcity.jpg";
+                    game.ImagePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), AppConstants.ResourceFolderName, AppConstants.DefaultImageFileName);
                 }
             }
             //gameObservable = new ObservableCollection<Game>(games);
