@@ -11,4 +11,11 @@
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+	  <Content Include="res\genres.xml">
+		  <!--<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>-->
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,6 @@
-﻿using Models;
+﻿#nullable disable
+
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,10 @@ namespace DataAccess
                 Games = XmlUtils.ReadFromXml<List<Game>>(Path.Combine(Directory.GetCurrentDirectory(),
                     AppConstants.ResourceFolderName,
                     AppConstants.GamesFileName));
+                if (Games == null)
+                {
+                    Games = new List<Game>();
+                }
             }
             catch
             {

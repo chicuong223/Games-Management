@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfGenre xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Genre>
+		<Name>Visual Novel</Name>
+	</Genre>
+	<Genre>
+		<Name>Horror</Name>
+	</Genre>
+	<Genre>
+		<Name>Sport</Name>
+	</Genre>
+	<Genre>
+		<Name>JRPG</Name>
+	</Genre>
+	<Genre>
+		<Name>Sandbox</Name>
+	</Genre>
+	<Genre>
+		<Name>Adventure</Name>
+	</Genre>
+	<Genre>
+		<Name>Puzzle</Name>
+	</Genre>
+	<Genre>
+		<Name>Hack &amp; Slash</Name>
+	</Genre>
+	<Genre>
+		<Name>RPG</Name>
+	</Genre>
+	<Genre>
+		<Name>Simulator</Name>
+	</Genre>
+	<Genre>
+		<Name>First Person</Name>
+	</Genre>
+	<Genre>
+		<Name>Strategy</Name>
+	</Genre>
+	<Genre>
+		<Name>Platformer</Name>
+	</Genre>
+</ArrayOfGenre>

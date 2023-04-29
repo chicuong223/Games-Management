@@ -35,14 +35,15 @@ namespace Utils
             }
         }
 
-        public static T ReadFromXml<T>(string filePath)
+        public static T? ReadFromXml<T>(string filePath)
         {
             object? result = null;
             try
             {
                 if (!File.Exists(filePath))
                 {
-                    throw new IOException("File not found!");
+                    //throw new IOException("File not found!");
+                    return default;
                 }
                 XmlSerializer serializer = new XmlSerializer(typeof(T));
                 using (StreamReader sr = new StreamReader(filePath))

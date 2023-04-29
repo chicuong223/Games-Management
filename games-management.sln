@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamesManagementApp", "GamesManagementApp\GamesManagementApp.csproj", "{F0D1D289-9E60-43F8-85E8-5F8FDC900853}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsole", "TestConsole\TestConsole.csproj", "{E6C95C85-6DA6-46FB-9FBB-69F1A9231B5C}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Install", "Install\Install.vdproj", "{E0A1996D-11FD-4F88-ADAD-ED56E22E1107}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,8 @@ Global
 		{F0D1D289-9E60-43F8-85E8-5F8FDC900853}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0D1D289-9E60-43F8-85E8-5F8FDC900853}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0D1D289-9E60-43F8-85E8-5F8FDC900853}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6C95C85-6DA6-46FB-9FBB-69F1A9231B5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6C95C85-6DA6-46FB-9FBB-69F1A9231B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6C95C85-6DA6-46FB-9FBB-69F1A9231B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6C95C85-6DA6-46FB-9FBB-69F1A9231B5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0A1996D-11FD-4F88-ADAD-ED56E22E1107}.Debug|Any CPU.ActiveCfg = Debug
+		{E0A1996D-11FD-4F88-ADAD-ED56E22E1107}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
