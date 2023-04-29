@@ -1,0 +1,92 @@
+﻿<Window x:Class="GamesManagementApp.DetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GamesManagementApp"
+        mc:Ignorable="d"
+        Title="DetailsWindow"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="panelInput"
+                    Margin="15"
+                    Grid.Row="0">
+            <Label x:Name="lbTitle"
+                   Content="Title"
+                   FontSize="16" />
+            <TextBox x:Name="txtTitle"
+                     FontSize="16"
+                     Text="{Binding Path=Title, Mode=OneWay}" />
+            <Label x:Name="lbImagePath"
+                   Content="Image Path"
+                   FontSize="16" />
+            <DockPanel x:Name="panelImagePath" LastChildFill="True">
+                <Button x:Name="btnImagePath"
+                        Content="Browse"
+                        FontSize="16"
+                        Padding="10"
+                        DockPanel.Dock="Right" />
+                <TextBox x:Name="txtImagePath"
+                     FontSize="16"
+                     Text="{Binding Path=ImagePath, Mode=OneWay}" />
+            </DockPanel>
+
+            <Label x:Name="lbExecutablePath"
+                   FontSize="16"
+                   Content="Executable Path" />
+            <DockPanel x:Name="panelExecutablePath" LastChildFill="True">
+                <Button x:Name="btnExecutablePath"
+                        Content="Browse"
+                        DockPanel.Dock="Right"
+                        FontSize="16"
+                        Padding="10" />
+                <TextBox x:Name="txtExecutablePath"
+                     FontSize="16"
+                     Text="{Binding Path=ExecutablePath, Mode=OneWay}" />
+            </DockPanel>
+            <Label x:Name="lbGenres"
+                   Content="Genres"
+                   FontSize="16" />
+            <Border
+                BorderThickness="1"
+                BorderBrush="Black"
+                Background="GhostWhite">
+                <StackPanel x:Name="panelGenres">
+                    <UniformGrid
+                        Margin="10"
+                        x:Name="lvGenres">
+                    </UniformGrid>
+                </StackPanel>
+            </Border>
+
+            <!--<ListView x:Name="lvGenres">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid HorizontalAlignment="Center" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>-->
+        </StackPanel>
+        <DockPanel x:Name="panelButtons"
+                   Grid.Row="1"
+                   HorizontalAlignment="Center">
+            <Button x:Name="btnSave"
+                    Content="Save"
+                    Padding="10"
+                    Margin="0 10 50 15"
+                    FontSize="16"
+                    Width="100" Click="btnSave_Click" />
+            <Button x:Name="btnClose"
+                    Content="Close"
+                    Padding="15"
+                    Margin="50 10 0 15"
+                    FontSize="16"
+                    Width="100" Click="btnClose_Click" />
+        </DockPanel>
+    </Grid>
+</Window>

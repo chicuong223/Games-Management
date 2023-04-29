@@ -77,7 +77,7 @@ namespace DataAccess
         {
             try
             {
-                Game? gameToUpdate = Cache.Games.FirstOrDefault(g => g.Id.Equals(game));
+                Game? gameToUpdate = Cache.Games.FirstOrDefault(g => g.Id.Equals(game.Id));
                 if (gameToUpdate == null)
                 {
                     throw new Exception($"Game with ID {game.Id} could not be found!");

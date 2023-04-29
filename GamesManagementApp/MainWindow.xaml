@@ -34,7 +34,7 @@
                     Content="Add"
                     Height="50"
                     Width="150"
-                    Margin="10" />
+                    Margin="10" Click="btnAdd_Click" />
             </DockPanel>
 
             <!--<ListView x:Name="lvGenres" Grid.Row="1">
@@ -51,7 +51,9 @@
             <ListBox x:Name="lsGames">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="3" HorizontalAlignment="Center" />
+                        <UniformGrid
+                            x:Name="uniformGridGames"
+                            HorizontalAlignment="Center" />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
@@ -78,7 +80,8 @@
                                         Width="100"
                                         Height="35"
                                         Margin="15"
-                                        FontSize="16" />
+                                        FontSize="16"
+                                        Click="btnDetails_Click" />
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>

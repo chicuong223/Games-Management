@@ -35,17 +35,28 @@ namespace GamesManagementApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            games = GamesDAO.Instance.GetGames();
-            genres = GenresDAO.Instance.GetGenres();
-            lsGames.ItemsSource = games;
             LoadGenres();
-            this.MinWidth = panelGenres.ActualWidth + gamesGrid.ActualWidth;
+            LoadGames();
+            this.MinWidth = filterGrid.ActualWidth + gamesGrid.ActualWidth;
             //this.Height = SystemParameters.PrimaryScreenHeight * 0.85;
             //lvGenres.ItemsSource = genres;
         }
 
+        private void Reload()
+        {
+            LoadGenres();
+            LoadGenres();
+        }
+
+        private void LoadGames()
+        {
+            games = GamesDAO.Instance.GetGames();
+            lsGames.ItemsSource = games;
+        }
+
         private void LoadGenres()
         {
+            genres = GenresDAO.Instance.GetGenres();
             foreach (var genre in genres)
             {
                 CheckBox cb = new CheckBox();
@@ -106,6 +117,29 @@ namespace GamesManagementApp
         {
             searchTitle = txtSearch.Text;
             Filter();
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            var detailsResult = (new DetailsWindow().ShowDialog());
+            if (detailsResult == true)
+            {
+                Reload();
+            }
+        }
+
+        private void btnDetails_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            Game? game = button.DataContext as Game;
+            if (game != null)
+            {
+                var detailsResult = (new DetailsWindow(game, true).ShowDialog());
+                if (detailsResult == true)
+                {
+                    Reload();
+                }
+            }
         }
     }
 }
