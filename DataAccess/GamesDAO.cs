@@ -123,5 +123,23 @@ namespace DataAccess
             Cache.ReloadGames();
             Cache.ReloadGenres();
         }
+
+        public bool DeleteGame(Game game)
+        {
+            if (Cache.Games.Contains(game))
+            {
+                try
+                {
+                    Cache.Games.Remove(game);
+                    XmlUtils.WriteToXml(Cache.Games, resourcePath, AppConstants.GamesFileName);
+                    return true;
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+            return false;
+        }
     }
 }

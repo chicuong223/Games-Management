@@ -19,8 +19,13 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <StackPanel x:Name="panelSearch" Orientation="Horizontal" Grid.Row="0">
-                <TextBox x:Name="txtSearch" Height="35" Width="200" TextChanged="txtSearch_TextChanged" />
                 <Button x:Name="btnSearch" Content="Search" Width="100" Height="35" />
+                <TextBox x:Name="txtSearch"
+                         Height="35"
+                         Width="200"
+                         FontSize="16"
+                         HorizontalAlignment="Center"
+                         TextChanged="txtSearch_TextChanged" />
             </StackPanel>
             <StackPanel x:Name="panelGenres"
                         Orientation="Vertical"
@@ -48,7 +53,37 @@
             </ListView>-->
         </Grid>
         <Grid x:Name="gamesGrid" Grid.Column="1">
-            <ListBox x:Name="lsGames">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="0"
+                        x:Name="panelButtons"
+                        Margin="15">
+                <Button x:Name="btnReload"
+                        Background="Blue"
+                        Foreground="White"
+                        Content="Reload"
+                        Width="100"
+                        Height="35"
+                        Click="btnReload_Click" />
+                <Button x:Name="btnDelete"
+                        Background="DarkRed"
+                        Foreground="White"
+                        Content="Delete"
+                        Width="100"
+                        Height="35"
+                        Click="btnDelete_Click"
+                        IsEnabled="False"
+                        Margin="15 0 0 0" />
+                <Button x:Name="btnClose"
+                        Content="Close"
+                        Width="100"
+                        Height="35"
+                        Margin="15 0 0 0" Click="btnClose_Click" />
+            </StackPanel>
+            <ListBox x:Name="lsGames" Grid.Row="1" SelectionChanged="lsGames_SelectionChanged">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid

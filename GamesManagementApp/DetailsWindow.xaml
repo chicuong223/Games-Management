@@ -44,7 +44,7 @@
                         Content="Browse"
                         DockPanel.Dock="Right"
                         FontSize="16"
-                        Padding="10" />
+                        Padding="10" Click="btnExecutablePath_Click" />
                 <TextBox x:Name="txtExecutablePath"
                      FontSize="16"
                      Text="{Binding Path=ExecutablePath, Mode=OneWay}" />

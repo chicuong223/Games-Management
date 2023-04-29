@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Utils;
 
 namespace GamesManagementApp
 {
@@ -50,6 +51,14 @@ namespace GamesManagementApp
                 }
             }
             this.isUpdating = isUpdating;
+            if (isUpdating)
+            {
+                this.Title = "Details";
+            }
+            else
+            {
+                this.Title = "Adding a game";
+            }
             this.DataContext = this.game;
         }
 
@@ -149,6 +158,18 @@ namespace GamesManagementApp
             {
                 result += "Executable Path is required!\n";
             }
+            else
+            {
+                if (!FileUtils.FileExists(txtExecutablePath.Text))
+                {
+                    result += "Executable file not found!\n";
+                }
+            }
+            if (!string.IsNullOrEmpty(txtImagePath.Text)
+                && !FileUtils.FileExists(txtImagePath.Text))
+            {
+                result += "Image file not found!\n";
+            }
             return result;
         }
 
@@ -156,11 +177,23 @@ namespace GamesManagementApp
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.DefaultExt = ".jpg";
-            dialog.Filter = "JPEG Image (*.jpeg)|*.jpeg|PNG Image (*.png)|*.png|JPG Image (*.jpg)|*.jpg|GIF Image (*.gif)|*.gif";
+            dialog.Filter = "JPG Image (*.jpg)|*.jpg|BMP Image (*.bmp)|*.jpg|PNG Image (*.png)|*.png|JPEG Image (*.jpeg)|*.jpeg|GIF Image (*.gif)|*.gif";
             bool? result = dialog.ShowDialog();
             if (result == true)
             {
                 txtImagePath.Text = dialog.FileName;
+            }
+        }
+
+        private void btnExecutablePath_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.DefaultExt = ".exe";
+            dialog.Filter = "Executable files (*.exe)|*.exe";
+            bool? result = dialog.ShowDialog();
+            if (result == true)
+            {
+                txtExecutablePath.Text = dialog.FileName;
             }
         }
     }

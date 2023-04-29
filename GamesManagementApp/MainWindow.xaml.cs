@@ -48,8 +48,10 @@ namespace GamesManagementApp
 
         private void Reload()
         {
+            GamesDAO.Instance.ReloadData();
             LoadGenres();
             LoadGames();
+            btnDelete.IsEnabled = false;
         }
 
         private void LoadGames()
@@ -71,6 +73,7 @@ namespace GamesManagementApp
 
         private void LoadGenres()
         {
+            panelGenres.Children.Clear();
             genres = GenresDAO.Instance.GetGenres();
             foreach (var genre in genres)
             {
@@ -154,6 +157,50 @@ namespace GamesManagementApp
                 {
                     Reload();
                 }
+            }
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            var game = (Game)lsGames.SelectedItem;
+            if (game != null)
+            {
+                var confirm = MessageBox.Show("Are you sure?", "Delete game", MessageBoxButton.YesNo);
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        GamesDAO.Instance.DeleteGame(game);
+                        MessageBox.Show("Deleted game successfully");
+                        Reload();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void lsGames_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            btnDelete.IsEnabled = true;
+        }
+
+        private void btnReload_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Reload();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
