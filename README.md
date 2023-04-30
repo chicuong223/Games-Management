@@ -9,4 +9,4 @@ This is a simple application that I created in my free time to practice using WP
 
 ## Techstack
 - .NET 6
-- WPF b
+- WPF
