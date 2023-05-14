@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="res\config.xml" />
     <None Remove="res\default.jpg" />
   </ItemGroup>
 
@@ -16,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <Content Include="res\config.xml">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Content>
 	  <Content Include="res\genres.xml">
 		  <!--<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>-->
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
