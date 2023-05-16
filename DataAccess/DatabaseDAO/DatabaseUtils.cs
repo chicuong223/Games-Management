@@ -1,4 +1,5 @@
 ﻿using DataAccess.Configuration;
+using Models;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,10 @@ namespace DataAccess.DatabaseDAO
 {
     public static class DatabaseUtils
     {
+        private static readonly string ScriptsFolder = "SqlScripts";
+        private static readonly string InitializeScript = "InitializeDBScript.txt";
+        private static readonly string InsertGenresScript = "InsertGenreScript.txt";
+
         public static string CreateConnectionStringFromConfig(Config config)
         {
             string connectionString = "";
@@ -25,7 +30,7 @@ namespace DataAccess.DatabaseDAO
                 if (dbConfig != null)
                 {
                     connectionString = $"Data Source={dbConfig.DatabaseName};User Id={dbConfig.UserId};password={dbConfig.Password}";
-                    if(dbConfig.UserId.ToLower().Equals("sys"))
+                    if (dbConfig.UserId.ToLower().Equals("sys"))
                     {
                         connectionString = string.Concat(connectionString, ";DBA Privilege=SYSDBA;");
                     }
@@ -58,14 +63,14 @@ namespace DataAccess.DatabaseDAO
                 throw;
             }
         }
-        
+
         public static bool TestConnection(string connectionString)
         {
             OracleConnection connection = new OracleConnection(connectionString);
             try
             {
                 connection.Open();
-                return true;    
+                return true;
             }
             catch
             {
@@ -74,6 +79,105 @@ namespace DataAccess.DatabaseDAO
             finally
             {
                 connection.Close();
+            }
+        }
+
+        public static void CreateTables(OracleConnection connection)
+        {
+            try
+            {
+                string query = createQueryStringFromFileName(InitializeScript);
+                using (OracleCommand cmd = new OracleCommand())
+                {
+                    cmd.CommandText = query;
+                    cmd.Connection = connection;
+                    if (connection.State != System.Data.ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public static void InsertGenres(OracleConnection connection)
+        {
+            try
+            {
+                List<Genre>? genres = XmlUtils.ReadFromXml<List<Genre>>(Path.Combine(Directory.GetCurrentDirectory(),
+                    AppConstants.ResourceFolderName,
+                    AppConstants.GenresFileName));
+                if (genres != null)
+                {
+
+                    //Get genre names and remove duplicates
+                    HashSet<string> genreSet = new HashSet<string>(
+                        from genre in genres
+                        select genre.Name
+                        );
+
+                    //open database connection
+                    if (connection.State != System.Data.ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+
+                    //insert genres
+                    foreach (string genre in genreSet)
+                    {
+                        //Execute query
+                        using (OracleCommand cmd = new OracleCommand())
+                        {
+                            cmd.Connection = connection;
+                            cmd.CommandText = createQueryStringFromFileName(InsertGenresScript);
+                            cmd.Parameters.Add("name", genre);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        private static string createQueryStringFromFileName(string fileName)
+        {
+            string query = "";
+            string? line;
+
+            try
+            {
+                //Create query from script file
+                using (StreamReader reader = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(),
+                            ScriptsFolder,
+                            fileName)))
+                {
+                    line = reader.ReadLine();
+                    while (line != null)
+                    {
+                        query = string.Concat(query, line.Trim());
+                        line = reader.ReadLine();
+                    }
+                }
+                return query;
+            }
+            catch
+            {
+                throw;
             }
         }
     }

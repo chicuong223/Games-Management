@@ -8,11 +8,11 @@ Config config = new Config
     DatabaseConfig = new DatabaseConfig("localhost:1521/ORCLCDB", "sys", "sys")
 };
 
-string connectionString = DatabaseUtil.CreateConnectionStringFromConfig(config);
+string connectionString = DatabaseUtils.CreateConnectionStringFromConfig(config);
 try
 {
-    OracleConnection conn = DatabaseUtil.MakeConnection(connectionString);
-    conn.Open();
+    OracleConnection conn = DatabaseUtils.MakeConnection(connectionString);
+    DatabaseUtils.InsertGenres(conn);
 }
 catch
 {

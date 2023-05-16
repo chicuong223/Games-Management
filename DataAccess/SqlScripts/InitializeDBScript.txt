@@ -1,0 +1,13 @@
+BEGIN
+	EXECUTE IMMEDIATE 'CREATE TABLE Game(
+		id varchar2(128) PRIMARY KEY,
+		title varchar2(500) NOT NULL,
+		imagePath varchar2(256),
+		executablePath varchar2(256) NOT NULL,
+		genres varchar2(3000)
+	)';
+
+	EXECUTE IMMEDIATE 'CREATE TABLE Genre (
+		name varchar2(200) PRIMARY KEY
+	)';
+END;
