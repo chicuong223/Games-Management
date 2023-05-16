@@ -1,5 +1,4 @@
-﻿using DataAccess;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -34,7 +33,7 @@ namespace GamesManagementApp
                 //this.game = game;
                 try
                 {
-                    var findGame = GamesDAO.Instance.FindGameById(game.Id);
+                    var findGame = DataAccess.FileDAO.GamesDAO.Instance.FindGameById(game.Id);
                     if (findGame == null)
                     {
                         MessageBox.Show("Could not find game!");
@@ -64,7 +63,7 @@ namespace GamesManagementApp
 
         private void LoadGenres()
         {
-            var genres = GenresDAO.Instance.GetGenres();
+            var genres = DataAccess.FileDAO.GenresDAO.Instance.GetGenres();
             foreach (var item in genres)
             {
                 CheckBox cb = new CheckBox();
@@ -130,12 +129,12 @@ namespace GamesManagementApp
                 if (!isUpdating)
                 {
                     game.Id = Guid.NewGuid();
-                    GamesDAO.Instance.AddGame(game);
+                    DataAccess.FileDAO.GamesDAO.Instance.AddGame(game);
                     message = "Added game successfully!";
                 }
                 else
                 {
-                    GamesDAO.Instance.UpdateGame(game);
+                    DataAccess.FileDAO.GamesDAO.Instance.UpdateGame(game);
                     message = "Updated game successfully!";
                 }
                 MessageBox.Show(message);

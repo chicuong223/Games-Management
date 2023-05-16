@@ -11,7 +11,6 @@ namespace DataAccess.Configuration
         public string DatabaseName { get; set; } = "";
         public string UserId { get; set; } = "";
         public string Password { get; set; } = "";
-        public DatabaseConfig() { }
 
         public DatabaseConfig(string databaseName, string userId, string password)
         {

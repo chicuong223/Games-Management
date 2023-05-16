@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Utils;
 
-namespace DataAccess
+namespace DataAccess.FileDAO
 {
     public class GamesDAO
     {
