@@ -12,7 +12,7 @@ namespace Models
         {
         }
 
-        public Game(Guid id, string title, string? imagePath, string executablePath, List<Genre> genres)
+        public Game(Guid id, string title, string imagePath, string executablePath, List<Genre> genres)
         {
             Id = id;
             Title = title;
@@ -23,7 +23,7 @@ namespace Models
 
         public Guid Id { get; set; }
         public string Title { get; set; } = "";
-        public string? ImagePath { get; set; } = "";
+        public string ImagePath { get; set; } = "";
         public string ExecutablePath { get; set; } = "";
         public List<Genre> Genres { get; set; } = new List<Genre>();
     }

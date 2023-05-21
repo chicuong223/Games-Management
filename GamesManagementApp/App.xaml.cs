@@ -24,7 +24,7 @@ namespace GamesManagementApp
                AppConstants.ConfigFileName);
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            this.ShutdownMode = ShutdownMode.OnMainWindowClose;
             if (!FileUtils.FileExists(configPath))
             {
                 ConfigRegisterWindow configRegisterWindow = new ConfigRegisterWindow();

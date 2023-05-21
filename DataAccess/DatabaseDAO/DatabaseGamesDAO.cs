@@ -12,7 +12,49 @@ namespace DataAccess.DatabaseDAO
     {
         public override bool AddGame(Game game)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            string query = "INSERT INTO game(id, title, executablePath, imagePath, genres) VALUES(:id, :title, :executablePath, :imagePath, :genres)";
+            try
+            {
+                //Convert list of genres to genres string
+                string genresString = string.Empty;
+                int index = 0;
+                foreach(var genre in game.Genres)
+                {
+                    index++;
+                    if (index == game.Genres.Count)
+                    {
+                        genresString += genre.Name;
+                    }
+                    else
+                    {
+                        genresString += $"{genre.Name},";
+                    }
+                }
+
+                using(OracleConnection connection = DatabaseUtils.MakeConnection(Globals.Config))
+                {
+                    if(connection.State != System.Data.ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+                    using(OracleCommand command = new OracleCommand(query, connection))
+                    {
+                        command.Parameters.Add("id", Guid.NewGuid().ToString());
+                        command.Parameters.Add("title", game.Title);
+                        command.Parameters.Add("executablePath", game.ExecutablePath);
+                        command.Parameters.Add("imagePath", game.ImagePath);
+                        command.Parameters.Add("genres", genresString);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                result = false;
+            }
+            return result;
         }
 
         public override bool DeleteGame(Game game)
@@ -25,10 +67,10 @@ namespace DataAccess.DatabaseDAO
             throw new NotImplementedException();
         }
 
-        public override IEnumerable<Game> GetGames(string? title = null, string[]? genres = null)
-        {
-            throw new NotImplementedException();
-        }
+        //public override IEnumerable<Game> GetGames(string? title = null, string[]? genres = null)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public override IEnumerable<Game> ReloadGames()
         {
@@ -69,7 +111,6 @@ namespace DataAccess.DatabaseDAO
             }
             catch (Exception ex)
             {
-                games = new List<Game>();
                 throw;
             }
             return games;

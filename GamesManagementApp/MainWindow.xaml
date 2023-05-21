@@ -94,14 +94,13 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="Game">
-                        <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Vertical" Width="240" ToolTip="{Binding Path=Title, Mode=OneWay}" ToolTipService.InitialShowDelay="500">
                             <Image Source="{Binding Path=ImagePath,Mode=OneWay}"
-                                   Width="240"
                                    Height="320"
                                    Stretch="UniformToFill"
-                                   HorizontalAlignment="Center" />
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding Path=Title,Mode=OneWay}"
-                                       HorizontalAlignment="Center"
                                        FontSize="16" />
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button x:Name="btnPlay"
