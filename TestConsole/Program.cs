@@ -5,14 +5,14 @@ using Oracle.ManagedDataAccess.Client;
 Config config = new Config
 {
     SaveType = "database",
-    DatabaseConfig = new DatabaseConfig("localhost:1521/ORCLCDB", "sys", "sys")
+    DatabaseConfig = new DatabaseConfig("localhost", 1521, "ORCLCDB", "sys", "sys", true)
 };
 
 string connectionString = DatabaseUtils.CreateConnectionStringFromConfig(config);
 try
 {
-    OracleConnection conn = DatabaseUtils.MakeConnection(connectionString);
-    DatabaseUtils.InsertGenres(conn);
+    bool success = DatabaseUtils.TestConnection(connectionString);
+    Console.WriteLine(success);
 }
 catch
 {

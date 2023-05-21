@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.DatabaseDAO
+namespace DataAccess
 {
-    public class GamesDAO
+    public abstract class GenresDAO
     {
     }
 }

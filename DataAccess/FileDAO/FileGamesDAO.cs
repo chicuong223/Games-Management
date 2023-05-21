@@ -8,32 +8,32 @@ using Utils;
 
 namespace DataAccess.FileDAO
 {
-    public class GamesDAO
+    public class FileGamesDAO : GamesDAO
     {
-        private GamesDAO()
+        public FileGamesDAO()
         { }
 
-        private static GamesDAO? instance;
-        private static readonly object instanceLock = new object();
+        //private static GamesDAO? instance;
+        //private static readonly object instanceLock = new object();
 
         private static readonly string resourcePath = Path.Combine(Directory.GetCurrentDirectory(), AppConstants.ResourceFolderName);
 
-        public static GamesDAO Instance
-        {
-            get
-            {
-                lock (instanceLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new GamesDAO();
-                    }
-                    return instance;
-                }
-            }
-        }
+        //public static GamesDAO Instance
+        //{
+        //    get
+        //    {
+        //        lock (instanceLock)
+        //        {
+        //            if (instance == null)
+        //            {
+        //                instance = new GamesDAO();
+        //            }
+        //            return instance;
+        //        }
+        //    }
+        //}
 
-        public IEnumerable<Game> GetGames(string? title = null, string[]? genres = null)
+        public override IEnumerable<Game> GetGames(string? title = null, string[]? genres = null)
         {
             IEnumerable<Game> games = Cache.Games;
             if (!string.IsNullOrEmpty(title))
@@ -59,7 +59,7 @@ namespace DataAccess.FileDAO
             return games;
         }
 
-        public bool AddGame(Game game)
+        public override bool AddGame(Game game)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace DataAccess.FileDAO
             }
         }
 
-        public bool UpdateGame(Game game)
+        public override bool UpdateGame(Game game)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace DataAccess.FileDAO
             }
         }
 
-        public Game? FindGameById(Guid id)
+        public override Game? FindGameById(Guid id)
         {
             Game? result = null;
             try
@@ -124,7 +124,7 @@ namespace DataAccess.FileDAO
             Cache.ReloadGenres();
         }
 
-        public bool DeleteGame(Game game)
+        public override bool DeleteGame(Game game)
         {
             if (Cache.Games.Contains(game))
             {
@@ -140,6 +140,23 @@ namespace DataAccess.FileDAO
                 }
             }
             return false;
+        }
+
+        public override IEnumerable<Game> ReloadGames()
+        {
+            IEnumerable<Game>? games;
+            try
+            {
+                games = XmlUtils.ReadFromXml<List<Game>>(Path.Combine(Directory.GetCurrentDirectory(),
+                    AppConstants.ResourceFolderName,
+                    AppConstants.GamesFileName));
+            }
+            catch(FileNotFoundException)
+            {
+                games = new List<Game>();
+            }
+            return games != null ? games : new List<Game>();
+
         }
     }
 }

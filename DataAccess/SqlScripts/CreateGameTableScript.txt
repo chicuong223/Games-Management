@@ -1,0 +1,7 @@
+CREATE TABLE Game(
+		id varchar2(128) PRIMARY KEY,
+		title varchar2(500) NOT NULL,
+		imagePath varchar2(256) default '',
+		executablePath varchar2(256) NOT NULL,
+		genres varchar2(3000)
+)

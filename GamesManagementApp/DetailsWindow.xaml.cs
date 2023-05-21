@@ -1,4 +1,7 @@
-﻿using Microsoft.Win32;
+﻿using DataAccess;
+using DataAccess.DatabaseDAO;
+using DataAccess.FileDAO;
+using Microsoft.Win32;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -25,6 +28,9 @@ namespace GamesManagementApp
         private Game game = new Game();
         private bool isUpdating = false;
 
+        private DataAccess.FileDAO.FileGamesDAO gamesDAO = new DataAccess.FileDAO.FileGamesDAO();
+        private FileGenresDAO genresDAO = new FileGenresDAO();
+
         public DetailsWindow(Game? game = null, bool isUpdating = false)
         {
             InitializeComponent();
@@ -33,7 +39,9 @@ namespace GamesManagementApp
                 //this.game = game;
                 try
                 {
-                    var findGame = DataAccess.FileDAO.GamesDAO.Instance.FindGameById(game.Id);
+                    //var findGame = DataAccess.FileDAO.GamesDAO.Instance.FindGameById(game.Id);
+                    //var findGame = gamesDAO.FindGameById(game.Id);
+                    var findGame = Cache.Games.FirstOrDefault(game => game.Id == game.Id);
                     if (findGame == null)
                     {
                         MessageBox.Show("Could not find game!");
@@ -63,7 +71,8 @@ namespace GamesManagementApp
 
         private void LoadGenres()
         {
-            var genres = DataAccess.FileDAO.GenresDAO.Instance.GetGenres();
+            //var genres = DataAccess.FileDAO.GenresDAO.Instance.GetGenres();
+            var genres = genresDAO.GetGenres();
             foreach (var item in genres)
             {
                 CheckBox cb = new CheckBox();
@@ -129,12 +138,14 @@ namespace GamesManagementApp
                 if (!isUpdating)
                 {
                     game.Id = Guid.NewGuid();
-                    DataAccess.FileDAO.GamesDAO.Instance.AddGame(game);
+                    //DataAccess.FileDAO.GamesDAO.Instance.AddGame(game);
+                    gamesDAO.AddGame(game);
                     message = "Added game successfully!";
                 }
                 else
                 {
-                    DataAccess.FileDAO.GamesDAO.Instance.UpdateGame(game);
+                    //DataAccess.FileDAO.GamesDAO.Instance.UpdateGame(game);
+                    gamesDAO.UpdateGame(game);
                     message = "Updated game successfully!";
                 }
                 MessageBox.Show(message);

@@ -14,7 +14,8 @@ namespace DataAccess.DatabaseDAO
     public static class DatabaseUtils
     {
         private static readonly string ScriptsFolder = "SqlScripts";
-        private static readonly string InitializeScript = "InitializeDBScript.txt";
+        private static readonly string CreateGameTableScript = "CreateGameTableScript.txt";
+        private static readonly string CreateGenreTableScript = "CreateGenreTableScript.txt";
         private static readonly string InsertGenresScript = "InsertGenreScript.txt";
 
         public static string CreateConnectionStringFromConfig(Config config)
@@ -29,8 +30,9 @@ namespace DataAccess.DatabaseDAO
                 DatabaseConfig? dbConfig = config.DatabaseConfig;
                 if (dbConfig != null)
                 {
-                    connectionString = $"Data Source={dbConfig.DatabaseName};User Id={dbConfig.UserId};password={dbConfig.Password}";
-                    if (dbConfig.UserId.ToLower().Equals("sys"))
+                    connectionString =
+                        $"Data Source={dbConfig.ServerAddress}:{dbConfig.Port}/{dbConfig.ServiceName};User Id={dbConfig.UserId};password={dbConfig.Password};";
+                    if (dbConfig.SysDba == true)
                     {
                         connectionString = string.Concat(connectionString, ";DBA Privilege=SYSDBA;");
                     }
@@ -64,6 +66,20 @@ namespace DataAccess.DatabaseDAO
             }
         }
 
+        public static OracleConnection MakeConnection(Config config)
+        {
+            try
+            {
+                string connectionString = CreateConnectionStringFromConfig(config);
+                OracleConnection connection = new OracleConnection(connectionString);
+                return connection;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public static bool TestConnection(string connectionString)
         {
             OracleConnection connection = new OracleConnection(connectionString);
@@ -82,11 +98,11 @@ namespace DataAccess.DatabaseDAO
             }
         }
 
-        public static void CreateTables(OracleConnection connection)
+        public static void CreateGameTable(OracleConnection connection)
         {
             try
             {
-                string query = createQueryStringFromFileName(InitializeScript);
+                string query = createQueryStringFromFileName(CreateGameTableScript);
                 using (OracleCommand cmd = new OracleCommand())
                 {
                     cmd.CommandText = query;
@@ -102,9 +118,26 @@ namespace DataAccess.DatabaseDAO
             {
                 throw;
             }
-            finally
+        }
+        public static void CreateGenreTable(OracleConnection connection)
+        {
+            try
             {
-                connection.Close();
+                string query = createQueryStringFromFileName(CreateGenreTableScript);
+                using (OracleCommand cmd = new OracleCommand())
+                {
+                    cmd.CommandText = query;
+                    cmd.Connection = connection;
+                    if (connection.State != System.Data.ConnectionState.Open)
+                    {
+                        connection.Open();
+                    }
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                throw;
             }
         }
 
@@ -148,10 +181,10 @@ namespace DataAccess.DatabaseDAO
             {
                 throw;
             }
-            finally
-            {
-                connection.Close();
-            }
+            //finally
+            //{
+            //    connection.Close();
+            //}
         }
 
         private static string createQueryStringFromFileName(string fileName)

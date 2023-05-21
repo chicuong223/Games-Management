@@ -22,14 +22,14 @@ namespace DataAccess
             try
             {
                 Games.Clear();
-                Games = XmlUtils.ReadFromXml<List<Game>>(Path.Combine(Directory.GetCurrentDirectory(),
-                    AppConstants.ResourceFolderName,
-                    AppConstants.GamesFileName));
-                if (Games == null)
-                {
-                    Games = new List<Game>();
-                }
-
+                Games = Globals.GamesDAO.ReloadGames().ToList();
+                //Games = XmlUtils.ReadFromXml<List<Game>>(Path.Combine(Directory.GetCurrentDirectory(),
+                //    AppConstants.ResourceFolderName,
+                //    AppConstants.GamesFileName));
+                //if (Games == null)
+                //{
+                //    Games = new List<Game>();
+                //}
                 //TODO: if config.SaveType is database, reload from database
             }
             catch

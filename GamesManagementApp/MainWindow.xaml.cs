@@ -1,4 +1,5 @@
-﻿using DataAccess.FileDAO;
+﻿using DataAccess;
+using DataAccess.FileDAO;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,8 @@ namespace GamesManagementApp
         private List<string> selectedGenres = new List<string>();
         private string searchTitle = "";
         private ObservableCollection<Game> gameObservable = new ObservableCollection<Game>();
+        //private FileGamesDAO Globals.GamesDAO = new FileGamesDAO();
+        private FileGenresDAO genresDAO = new FileGenresDAO();
 
         public MainWindow()
         {
@@ -48,7 +51,8 @@ namespace GamesManagementApp
 
         private void Reload()
         {
-            GamesDAO.Instance.ReloadData();
+            //Globals.GamesDAO.ReloadGames();
+            Cache.Reload();
             LoadGenres();
             LoadGames();
             btnDelete.IsEnabled = false;
@@ -56,8 +60,8 @@ namespace GamesManagementApp
 
         private void LoadGames()
         {
-            gameObservable = new ObservableCollection<Game>(GamesDAO.Instance.GetGames());
-            //IEnumerable<Game> games = GamesDAO.Instance.GetGames();
+            gameObservable = new ObservableCollection<Game>(Cache.Games);
+            //IEnumerable<Game> games = Globals.GamesDAO.GetGames();
 
             //set image
             foreach (var game in gameObservable)
@@ -75,7 +79,7 @@ namespace GamesManagementApp
         private void LoadGenres()
         {
             panelGenres.Children.Clear();
-            genres = GenresDAO.Instance.GetGenres();
+            genres = genresDAO.GetGenres();
             foreach (var genre in genres)
             {
                 CheckBox cb = new CheckBox();
@@ -111,7 +115,7 @@ namespace GamesManagementApp
 
         private void Filter()
         {
-            gameObservable = new(GamesDAO.Instance.GetGames(searchTitle, selectedGenres.ToArray()));
+            gameObservable = new(Globals.GamesDAO.GetGames(searchTitle, selectedGenres.ToArray()));
             lsGames.ItemsSource = gameObservable;
         }
 
@@ -176,7 +180,7 @@ namespace GamesManagementApp
                 {
                     try
                     {
-                        GamesDAO.Instance.DeleteGame(game);
+                        Globals.GamesDAO.DeleteGame(game);
                         MessageBox.Show("Deleted game successfully");
                         Reload();
                     }

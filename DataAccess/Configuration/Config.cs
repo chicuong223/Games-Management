@@ -9,6 +9,6 @@ namespace DataAccess.Configuration
     public class Config
     {
         public string SaveType { get; set; } = "";
-        public DatabaseConfig? DatabaseConfig { get; set; } = null;
+        public DatabaseConfig? DatabaseConfig { get; set; } = new DatabaseConfig();
     }
 }
