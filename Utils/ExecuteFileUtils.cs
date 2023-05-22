@@ -26,14 +26,14 @@ namespace Utils
                         process.StartInfo.FileName = "cmd.exe";
                         process.StartInfo.WorkingDirectory = folder;
                         process.StartInfo.RedirectStandardInput = true;
-                        process.StartInfo.RedirectStandardOutput = true;
+                        //process.StartInfo.RedirectStandardOutput = true;
                         process.StartInfo.UseShellExecute = false;
                         process.StartInfo.CreateNoWindow = true;
                         process.Start();
                         process.StandardInput.WriteLine($"\"{fileName}\"");
                         process.StandardInput.WriteLine("exit");
-                        process.StandardOutput.ReadToEnd();
-                        process.WaitForExit();
+                        //process.StandardOutput.ReadToEnd();
+                        //process.WaitForExit();
                     }
                 }
             }

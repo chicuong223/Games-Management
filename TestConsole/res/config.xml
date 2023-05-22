@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Config>
-	<SaveType></SaveType>
-	<DatabaseConfig>
-		<DatabaseName></DatabaseName>
-		<UserId></UserId>
-		<Password></Password>
-	</DatabaseConfig>
-</Config>

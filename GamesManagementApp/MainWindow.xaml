@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:GamesManagementApp"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Title="Games Manager">
+        Title="Games Manager"
+        Closed="Window_Closed">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />

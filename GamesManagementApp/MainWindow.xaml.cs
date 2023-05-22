@@ -237,5 +237,10 @@ namespace GamesManagementApp
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

@@ -108,8 +108,11 @@ namespace DataAccess.FileDAO
             Game? result = null;
             try
             {
-                List<Game> games = XmlUtils.ReadFromXml<List<Game>>(Path.Combine(resourcePath, AppConstants.GamesFileName));
-                result = games.FirstOrDefault(g => g.Id == id);
+                List<Game>? games = XmlUtils.ReadFromXml<List<Game>>(Path.Combine(resourcePath, AppConstants.GamesFileName));
+                if(games != null)
+                {
+                    result = games.FirstOrDefault(g => g.Id == id);
+                }
             }
             catch
             {

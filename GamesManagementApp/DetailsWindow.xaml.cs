@@ -193,7 +193,7 @@ namespace GamesManagementApp
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.DefaultExt = ".jpg";
-            dialog.Filter = "JPG Image (*.jpg)|*.jpg|BMP Image (*.bmp)|*.jpg|PNG Image (*.png)|*.png|JPEG Image (*.jpeg)|*.jpeg|GIF Image (*.gif)|*.gif";
+            dialog.Filter = "JPG Image (*.jpg)|*.jpg|BMP Image (*.bmp)|*.jpg|PNG Image (*.png)|*.png|JPEG Image (*.jpeg)|*.jpeg|GIF Image (*.gif)|*.gif|All files (*)";
             bool? result = dialog.ShowDialog();
             if (result == true)
             {
@@ -203,13 +203,20 @@ namespace GamesManagementApp
 
         private void btnExecutablePath_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.DefaultExt = ".exe";
-            dialog.Filter = "Executable files (*.exe)|*.exe";
-            bool? result = dialog.ShowDialog();
-            if (result == true)
+            try
             {
-                txtExecutablePath.Text = dialog.FileName;
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.DefaultExt = ".exe";
+                dialog.Filter = "Executable files (*.exe)|*.exe|URL files (*.url)|*.url";
+                bool? result = dialog.ShowDialog();
+                if (result == true)
+                {
+                    txtExecutablePath.Text = dialog.FileName;
+                }
+            }
+            catch 
+            {
+                MessageBox.Show("An error has occurred!");
             }
         }
     }
