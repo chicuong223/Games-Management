@@ -40,10 +40,11 @@ namespace Utils
             object? result = null;
             try
             {
-                if (!File.Exists(filePath))
+                if (!FileUtils.FileExists(filePath))
                 {
                     //throw new IOException("File not found!");
-                    return default;
+                    //return default;
+                    throw new FileNotFoundException("File not found!");
                 }
                 XmlSerializer serializer = new XmlSerializer(typeof(T));
                 using (StreamReader sr = new StreamReader(filePath))

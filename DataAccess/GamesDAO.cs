@@ -4,35 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Utils;
 
 namespace DataAccess
 {
-    public class GamesDAO
+    public abstract class GamesDAO
     {
-        private GamesDAO()
-        { }
-
-        private static GamesDAO? instance;
-        private static readonly object instanceLock = new object();
-
-        private static readonly string resourcePath = Path.Combine(Directory.GetCurrentDirectory(), AppConstants.ResourceFolderName);
-
-        public static GamesDAO Instance
-        {
-            get
-            {
-                lock (instanceLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new GamesDAO();
-                    }
-                    return instance;
-                }
-            }
-        }
-
         public IEnumerable<Game> GetGames(string? title = null, string[]? genres = null)
         {
             IEnumerable<Game> games = Cache.Games;
@@ -58,88 +34,10 @@ namespace DataAccess
             }
             return games;
         }
-
-        public bool AddGame(Game game)
-        {
-            try
-            {
-                Cache.Games.Add(game);
-                XmlUtils.WriteToXml(Cache.Games, resourcePath, AppConstants.GamesFileName);
-                return true;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public bool UpdateGame(Game game)
-        {
-            try
-            {
-                Game? gameToUpdate = Cache.Games.FirstOrDefault(g => g.Id.Equals(game.Id));
-                if (gameToUpdate == null)
-                {
-                    throw new Exception($"Game with ID {game.Id} could not be found!");
-                }
-                gameToUpdate.Title = game.Title;
-                gameToUpdate.ImagePath = game.ImagePath;
-                gameToUpdate.ExecutablePath = game.ExecutablePath;
-                gameToUpdate.Genres = game.Genres;
-                //Cache.Games.Remove(gameToUpdate);
-                //Cache.Games.Add(game);
-                //var dic = Cache.Games.ToDictionary(g => g.Id);
-                //Game? gameToUpdate;
-                //if (dic.TryGetValue(game.Id, out gameToUpdate))
-                //{
-                //    gameToUpdate = game;
-                //}
-                XmlUtils.WriteToXml(Cache.Games, resourcePath, AppConstants.GamesFileName);
-                return true;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        public Game? FindGameById(Guid id)
-        {
-            Game? result = null;
-            try
-            {
-                List<Game> games = XmlUtils.ReadFromXml<List<Game>>(Path.Combine(resourcePath, AppConstants.GamesFileName));
-                result = games.FirstOrDefault(g => g.Id == id);
-            }
-            catch
-            {
-                throw;
-            }
-            return result;
-        }
-
-        public void ReloadData()
-        {
-            Cache.ReloadGames();
-            Cache.ReloadGenres();
-        }
-
-        public bool DeleteGame(Game game)
-        {
-            if (Cache.Games.Contains(game))
-            {
-                try
-                {
-                    Cache.Games.Remove(game);
-                    XmlUtils.WriteToXml(Cache.Games, resourcePath, AppConstants.GamesFileName);
-                    return true;
-                }
-                catch
-                {
-                    throw;
-                }
-            }
-            return false;
-        }
+        public abstract bool AddGame(Game game);
+        public abstract bool UpdateGame(Game game);
+        public abstract Game? FindGameById(Guid id);
+        public abstract bool DeleteGame(Game game);
+        public abstract IEnumerable<Game> ReloadGames();
     }
 }

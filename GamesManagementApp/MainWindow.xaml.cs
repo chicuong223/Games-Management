@@ -1,8 +1,10 @@
 ﻿using DataAccess;
+using DataAccess.FileDAO;
 using Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -31,6 +33,8 @@ namespace GamesManagementApp
         private List<string> selectedGenres = new List<string>();
         private string searchTitle = "";
         private ObservableCollection<Game> gameObservable = new ObservableCollection<Game>();
+        //private FileGamesDAO Globals.GamesDAO = new FileGamesDAO();
+        private FileGenresDAO genresDAO = new FileGenresDAO();
 
         public MainWindow()
         {
@@ -46,9 +50,10 @@ namespace GamesManagementApp
             //lvGenres.ItemsSource = genres;
         }
 
-        private void Reload()
+        private void reload()
         {
-            GamesDAO.Instance.ReloadData();
+            //Globals.GamesDAO.ReloadGames();
+            Cache.Reload();
             LoadGenres();
             LoadGames();
             btnDelete.IsEnabled = false;
@@ -56,8 +61,17 @@ namespace GamesManagementApp
 
         private void LoadGames()
         {
-            gameObservable = new ObservableCollection<Game>(GamesDAO.Instance.GetGames());
-            //IEnumerable<Game> games = GamesDAO.Instance.GetGames();
+            //Error: Cache.Games are modified with gameObservable
+            //gameObservable = new ObservableCollection<Game>(Cache.Games);
+            //IEnumerable<Game> games = Globals.GamesDAO.GetGames();
+
+            gameObservable.Clear();
+
+            foreach(var game in Cache.Games)
+            {
+                Game observeGame = new Game(game.Id, game.Title, game.ImagePath, game.ExecutablePath, game.Genres);
+                gameObservable.Add(observeGame);
+            }
 
             //set image
             foreach (var game in gameObservable)
@@ -75,7 +89,7 @@ namespace GamesManagementApp
         private void LoadGenres()
         {
             panelGenres.Children.Clear();
-            genres = GenresDAO.Instance.GetGenres();
+            genres = genresDAO.GetGenres();
             foreach (var genre in genres)
             {
                 CheckBox cb = new CheckBox();
@@ -106,13 +120,25 @@ namespace GamesManagementApp
                     }
                 }
             }
-            Filter();
+            filter();
         }
 
-        private void Filter()
+        private void filter()
         {
-            gameObservable = new(GamesDAO.Instance.GetGames(searchTitle, selectedGenres.ToArray()));
+            //gameObservable = new(Globals.GamesDAO.GetGames(searchTitle, selectedGenres.ToArray()));
+            gameObservable.Clear();
+            var filteredGames = Globals.GamesDAO.GetGames(searchTitle, selectedGenres.ToArray());
+            foreach (var searchedGame in filteredGames)
+            {
+                Game game = new Game(searchedGame.Id, searchedGame.Title, searchedGame.ImagePath, searchedGame.ExecutablePath, searchedGame.Genres);
+                if (!FileUtils.FileExists(game.ImagePath))
+                {
+                    game.ImagePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), AppConstants.ResourceFolderName, AppConstants.DefaultImageFileName);
+                }
+                gameObservable.Add(game);
+            }
             lsGames.ItemsSource = gameObservable;
+            //lsGames.SelectedItem = null;
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
@@ -135,7 +161,7 @@ namespace GamesManagementApp
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             searchTitle = txtSearch.Text;
-            Filter();
+            filter();
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -143,7 +169,7 @@ namespace GamesManagementApp
             var detailsResult = (new DetailsWindow().ShowDialog());
             if (detailsResult == true)
             {
-                Reload();
+                reload();
             }
         }
 
@@ -156,7 +182,7 @@ namespace GamesManagementApp
                 var detailsResult = (new DetailsWindow(game, true).ShowDialog());
                 if (detailsResult == true)
                 {
-                    Reload();
+                    reload();
                 }
             }
         }
@@ -176,9 +202,9 @@ namespace GamesManagementApp
                 {
                     try
                     {
-                        GamesDAO.Instance.DeleteGame(game);
+                        Globals.GamesDAO.DeleteGame(game);
                         MessageBox.Show("Deleted game successfully");
-                        Reload();
+                        reload();
                     }
                     catch (Exception ex)
                     {
@@ -190,19 +216,31 @@ namespace GamesManagementApp
 
         private void lsGames_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            btnDelete.IsEnabled = true;
+            if(lsGames.SelectedItem != null)
+            {
+                btnDelete.IsEnabled = true;
+            }
+            else
+            {
+                btnDelete.IsEnabled = false;
+            }
         }
 
         private void btnReload_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Reload();
+                reload();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
