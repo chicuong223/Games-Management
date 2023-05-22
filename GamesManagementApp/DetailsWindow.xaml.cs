@@ -193,7 +193,7 @@ namespace GamesManagementApp
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.DefaultExt = ".jpg";
-            dialog.Filter = "JPG Image (*.jpg)|*.jpg|BMP Image (*.bmp)|*.jpg|PNG Image (*.png)|*.png|JPEG Image (*.jpeg)|*.jpeg|GIF Image (*.gif)|*.gif|All files (*)";
+            dialog.Filter = "JPG Image (*.jpg)|*.jpg|BMP Image (*.bmp)|*.jpg|PNG Image (*.png)|*.png|JPEG Image (*.jpeg)|*.jpeg|GIF Image (*.gif)|*.gif|All files (*)|*";
             bool? result = dialog.ShowDialog();
             if (result == true)
             {

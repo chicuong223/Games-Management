@@ -2,19 +2,9 @@
 using DataAccess.DatabaseDAO;
 using Oracle.ManagedDataAccess.Client;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Utils;
 
 namespace GamesManagementApp
@@ -76,6 +66,7 @@ namespace GamesManagementApp
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
+            //Application.Current.Shutdown();
         }
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
@@ -98,6 +89,10 @@ namespace GamesManagementApp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             cbSaveType.SelectedIndex = 0;
+
+            //Adjust window size
+            this.Width = SystemParameters.PrimaryScreenWidth * 0.45;
+            this.Height = SystemParameters.PrimaryScreenHeight * 0.85;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
