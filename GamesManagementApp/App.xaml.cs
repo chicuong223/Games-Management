@@ -31,6 +31,7 @@ namespace GamesManagementApp
                 var result = configRegisterWindow.ShowDialog();
                 if (result == false)
                 {
+                    Application.Current.Shutdown();
                     return;
                 }
             }

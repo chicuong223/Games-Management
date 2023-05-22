@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GamesManagementApp"
         mc:Ignorable="d"
-        Title="ConfigRegisterWindow" Height="768" Width="800"
+        Title="Configuration Register" Height="768" Width="800"
+        ResizeMode="NoResize"
         Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
@@ -13,9 +14,11 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
-            <Label x:Name="lbSaveType">Save Type</Label>
-            <ComboBox x:Name="cbSaveType" 
+        <StackPanel Grid.Row="0" Margin="10 0 10 0">
+            <Label x:Name="lbSaveType" FontSize="16">Save Type</Label>
+            <ComboBox x:Name="cbSaveType"
+                      Padding="10"
+                      FontSize="16"
                       SelectionChanged="cbSaveType_SelectionChanged"
                       SelectedValue="{Binding Path=SaveType}"
                       SelectedValuePath="Content">
@@ -25,33 +28,34 @@
         </StackPanel>
         <StackPanel Grid.Row="1" 
                     Orientation="Vertical"
-                    x:Name="panelDatabase">
+                    x:Name="panelDatabase"
+                    Margin="10 0 10 0">
             <Label x:Name="lbServer" 
                    FontSize="16" 
                    Margin="0 15 0 0">Server Address</Label>
             <TextBox x:Name="txtServerAddress" 
-                     Height="35" 
+                     Padding="10"
                      FontSize="16"
                      Text="{Binding Path=DatabaseConfig.ServerAddress}"/>
             <Label x:Name="lbPort" 
                    FontSize="16" 
                    Margin="0 15 0 0">Port</Label>
             <TextBox x:Name="txtPort" 
-                     Height="35" 
+                     Padding="10"
                      FontSize="16"
                      Text="{Binding Path=DatabaseConfig.Port}"/>
             <Label x:Name="lbService" 
                    FontSize="16" 
                    Margin="0 15 0 0">Service Name</Label>
             <TextBox x:Name="txtService" 
-                     Height="35" 
+                     Padding="10"
                      FontSize="16"
                      Text="{Binding Path=DatabaseConfig.ServiceName}"/>
             <Label x:Name="lbUsername" 
                    FontSize="16" 
                    Margin="0 15 0 0">Username</Label>
             <TextBox x:Name="txtUsername" 
-                     Height="35"
+                     Padding="10"
                      FontSize="16"
                      Text="{Binding Path=DatabaseConfig.UserId}"/>
             <Label x:Name="lbPassword" 
@@ -59,15 +63,16 @@
                    Margin="0 15 0 0">Password</Label>
             <PasswordBox x:Name="txtPassword" 
                          FontSize="16" 
-                         Height="35"
+                         Padding="10"
                          PasswordChanged="txtPassword_PasswordChanged"/>
             <CheckBox x:Name="chkSysdba" 
                       Content="SysDBA" 
                       IsChecked="{Binding Path=DatabaseConfig.SysDba}"
                       FontSize="16"
-                      Margin="0 15 0 0"/>
+                      Padding="10"
+                      VerticalContentAlignment="Center"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="2">
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10 0 0 0">
             <Button x:Name="btnTest" Content="Test Connection" FontSize="16" Height="30" Width="150" Click="btnTest_Click"/>
             <Button x:Name="btnSave" Content="Save" FontSize="16" Margin="15" Height="30" Width="150" Click="btnSave_Click"/>
             <Button x:Name="btnClose" Content="Cancel" FontSize="16" Height="30" Width="150" Click="btnClose_Click"/>

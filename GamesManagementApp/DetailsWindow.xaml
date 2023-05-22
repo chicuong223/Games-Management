@@ -21,7 +21,8 @@
                    FontSize="16" />
             <TextBox x:Name="txtTitle"
                      FontSize="16"
-                     Text="{Binding Path=Title, Mode=OneWay}" />
+                     Text="{Binding Path=Title, Mode=OneWay}" 
+                     Padding="10"/>
             <Label x:Name="lbImagePath"
                    Content="Image Path"
                    FontSize="16" />
@@ -33,6 +34,7 @@
                         DockPanel.Dock="Right" Click="btnImagePath_Click" />
                 <TextBox x:Name="txtImagePath"
                      FontSize="16"
+                     Padding="10"
                      Text="{Binding Path=ImagePath, Mode=OneWay}" />
             </DockPanel>
 
@@ -47,6 +49,7 @@
                         Padding="10" Click="btnExecutablePath_Click" />
                 <TextBox x:Name="txtExecutablePath"
                      FontSize="16"
+                     Padding="10"
                      Text="{Binding Path=ExecutablePath, Mode=OneWay}" />
             </DockPanel>
             <Label x:Name="lbGenres"
